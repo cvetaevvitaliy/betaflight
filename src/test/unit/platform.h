@@ -123,3 +123,5 @@ typedef struct
 #include "target.h"
 
 #include "target/common_defaults_post.h"
+#include "target/common_default_feature.h"
+#include "target/common_feature.h"

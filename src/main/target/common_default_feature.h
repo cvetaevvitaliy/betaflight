@@ -18,25 +18,8 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#define NOINLINE __attribute__((noinline))
-
-#if !defined(UNIT_TEST) && !defined(SIMULATOR_BUILD) && !(USBD_DEBUG_LEVEL > 0)
-#pragma GCC poison sprintf snprintf
-#endif
-
-#ifdef USE_CONFIG
-#include "config.h"
-#endif
-
-#include "target/common_pre.h"
-
-// MCU specific platform from drivers/XX
-#include "platform_mcu.h"
-
-#include "target.h"
-#include "target/common_post.h"
-#include "target/common_defaults_post.h"
-#include "target/common_default_feature.h"
-#include "target/common_feature.h"
+#define SET_FEATURE_INFLIGHT_ACC_CAL
+#define SET_FEATURE_MOTOR_STOP
+#define SET_FEATURE_3D
+#define SET_FEATURE_AIRMODE
+#define SET_FEATURE_ANTI_GRAVITY
