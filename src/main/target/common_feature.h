@@ -17,7 +17,7 @@
  *
  * If not, see <http://www.gnu.org/licenses/>.
  */
-#include "config/feature.h"
+#include "target/common_default_feature.h"
 
 #define FEATURE_DISABLE 0U
 

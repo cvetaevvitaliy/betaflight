@@ -41,59 +41,59 @@ uint32_t featuresSupportedByBuild =
 #ifdef USE_PPM
     | FEATURE_RX_PPM,
 #endif
-    | SET_FEATURE_INFLIGHT_ACC_CAL // always available
+    | FEATURE_INFLIGHT_ACC_CAL // always available
 #ifdef USE_SERIALRX
-    | SET_FEATURE_RX_SERIAL
+    | FEATURE_RX_SERIAL
 #endif
-    | SET_FEATURE_MOTOR_STOP // always available
+    | FEATURE_MOTOR_STOP // always available
 #ifdef USE_SERVOS
-    | SET_FEATURE_SERVO_TILT
+    | FEATURE_SERVO_TILT
 #endif
 #ifdef USE_SOFTSERIAL
-    | SET_FEATURE_SOFTSERIAL
+    | FEATURE_SOFTSERIAL
 #endif
 #ifdef USE_GPS
-    | SET_FEATURE_GPS
+    | FEATURE_GPS
 #endif
 #ifdef USE_RANGEFINDER
-    | SET_FEATURE_RANGEFINDER
+    | FEATURE_RANGEFINDER
 #endif
 #ifdef USE_TELEMETRY
-    | SET_FEATURE_TELEMETRY
+    | FEATURE_TELEMETRY
 #endif
-    | SET_FEATURE_3D // always available
+    | FEATURE_3D // always available
 #ifdef USE_PWM
-    | SET_FEATURE_RX_PARALLEL_PWM
+    | FEATURE_RX_PARALLEL_PWM
 #endif
 #ifdef USE_RX_MSP
-    | SET_FEATURE_RX_MSP
+    | FEATURE_RX_MSP
 #endif
 #ifdef USE_ADC
-    | SET_FEATURE_RSSI_ADC
+    | FEATURE_RSSI_ADC
 #endif
 #ifdef USE_LED_STRIP  // but cms will try to use it
-    | SET_FEATURE_LED_STRIP
+    | FEATURE_LED_STRIP
 #endif
 #ifdef USE_DASHBOARD
-    | SET_FEATURE_DASHBOARD
+    | FEATURE_DASHBOARD
 #endif
 #ifdef USE_OSD
-    | SET_FEATURE_OSD
+    | FEATURE_OSD
 #endif
 #ifdef USE_SERVOS
-    | SET_FEATURE_CHANNEL_FORWARDING
+    | FEATURE_CHANNEL_FORWARDING
 #endif
 #ifdef USE_TRANSPONDER
-    | SET_FEATURE_TRANSPONDER
+    | FEATURE_TRANSPONDER
 #endif
-    | SET_FEATURE_AIRMODE // always available
+    | FEATURE_AIRMODE // always available
 #ifdef USE_RX_SPI
-    | SET_FEATURE_RX_SPI
+    | FEATURE_RX_SPI
 #endif
 #ifdef USE_ESC_SENSOR
-    | SET_FEATURE_ESC_SENSOR
+    | FEATURE_ESC_SENSOR
 #endif
-    | SET_FEATURE_ANTI_GRAVITY // always available
+    | FEATURE_ANTI_GRAVITY // always available
     ;
 
 static uint32_t runtimeFeatureMask;

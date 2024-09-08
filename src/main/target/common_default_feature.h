@@ -17,6 +17,7 @@
  *
  * If not, see <http://www.gnu.org/licenses/>.
  */
+#include "config.h"
 
 #define SET_FEATURE_INFLIGHT_ACC_CAL
 #define SET_FEATURE_MOTOR_STOP
