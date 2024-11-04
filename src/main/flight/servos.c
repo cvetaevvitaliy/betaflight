@@ -175,11 +175,11 @@ static const servoMixer_t servoMixerGimbal[] = {
     // { SERVO_GIMBAL_PITCH, INPUT_GIMBAL_PITCH, 125, 0, 0, 100, 0 },
     // { SERVO_GIMBAL_ROLL, INPUT_GIMBAL_ROLL,  125, 0, 0, 100, 0 },
 
-    { INPUT_CUSTOM_0, INPUT_CUSTOM_0, 125, 0, 0, 100, 0 },
-    { INPUT_CUSTOM_1, INPUT_CUSTOM_1, 125, 0, 0, 100, 0 },
-    { INPUT_CUSTOM_2, INPUT_CUSTOM_2, 125, 0, 0, 100, 0 },
-    { INPUT_CUSTOM_3, INPUT_CUSTOM_3, 125, 0, 0, 100, 0 },
-    { INPUT_CUSTOM_4, INPUT_CUSTOM_4, 125, 0, 0, 100, 0 },
+    { SERVO_CUSTOM_0, INPUT_CUSTOM_0, 125, 0, 0, 100, 0 },
+    { SERVO_CUSTOM_1, INPUT_CUSTOM_1, 125, 0, 0, 100, 0 },
+    { SERVO_CUSTOM_2, INPUT_CUSTOM_2, 125, 0, 0, 100, 0 },
+    { SERVO_CUSTOM_3, INPUT_CUSTOM_3, 125, 0, 0, 100, 0 },
+    { SERVO_CUSTOM_4, INPUT_CUSTOM_4, 125, 0, 0, 100, 0 },
 };
 
 const mixerRules_t servoMixers[] = {
@@ -397,7 +397,7 @@ void writeServos(void)
     if (featureIsEnabled(FEATURE_SERVO_TILT) || getMixerMode() == MIXER_GIMBAL) {
         // updateGimbalServos(servoIndex);
         // servoIndex += 2;
-        
+
         writeServoWithTracking(servoIndex++, SERVO_CUSTOM_0);
         writeServoWithTracking(servoIndex++, SERVO_CUSTOM_1);
         writeServoWithTracking(servoIndex++, SERVO_CUSTOM_2);
