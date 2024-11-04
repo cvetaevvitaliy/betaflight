@@ -172,8 +172,14 @@ static const servoMixer_t servoMixerHeli[] = {
 #endif // USE_UNCOMMON_MIXERS
 
 static const servoMixer_t servoMixerGimbal[] = {
-    { SERVO_GIMBAL_PITCH, INPUT_GIMBAL_PITCH, 125, 0, 0, 100, 0 },
-    { SERVO_GIMBAL_ROLL, INPUT_GIMBAL_ROLL,  125, 0, 0, 100, 0 },
+    // { SERVO_GIMBAL_PITCH, INPUT_GIMBAL_PITCH, 125, 0, 0, 100, 0 },
+    // { SERVO_GIMBAL_ROLL, INPUT_GIMBAL_ROLL,  125, 0, 0, 100, 0 },
+
+    { INPUT_CUSTOM_0, INPUT_CUSTOM_0, 125, 0, 0, 100, 0 },
+    { INPUT_CUSTOM_1, INPUT_CUSTOM_1, 125, 0, 0, 100, 0 },
+    { INPUT_CUSTOM_2, INPUT_CUSTOM_2, 125, 0, 0, 100, 0 },
+    { INPUT_CUSTOM_3, INPUT_CUSTOM_3, 125, 0, 0, 100, 0 },
+    { INPUT_CUSTOM_4, INPUT_CUSTOM_4, 125, 0, 0, 100, 0 },
 };
 
 const mixerRules_t servoMixers[] = {
@@ -321,7 +327,7 @@ static void writeServoWithTracking(uint8_t index, servoIndex_e servoname)
     servoWritten |= (1 << servoname);
 }
 
-static void updateGimbalServos(uint8_t firstServoIndex)
+__attribute__((unused)) static void updateGimbalServos(uint8_t firstServoIndex)
 {
     writeServoWithTracking(firstServoIndex + 0, SERVO_GIMBAL_PITCH);
     writeServoWithTracking(firstServoIndex + 1, SERVO_GIMBAL_ROLL);
@@ -389,8 +395,14 @@ void writeServos(void)
 
     // Two servos for SERVO_TILT, if enabled
     if (featureIsEnabled(FEATURE_SERVO_TILT) || getMixerMode() == MIXER_GIMBAL) {
-        updateGimbalServos(servoIndex);
-        servoIndex += 2;
+        // updateGimbalServos(servoIndex);
+        // servoIndex += 2;
+        
+        writeServoWithTracking(servoIndex++, SERVO_CUSTOM_0);
+        writeServoWithTracking(servoIndex++, SERVO_CUSTOM_1);
+        writeServoWithTracking(servoIndex++, SERVO_CUSTOM_2);
+        writeServoWithTracking(servoIndex++, SERVO_CUSTOM_3);
+        writeServoWithTracking(servoIndex++, SERVO_CUSTOM_4);
     }
 
     // Scan servos and write those marked forwarded and not written yet
@@ -432,6 +444,13 @@ void servoMixer(void)
 
     input[INPUT_GIMBAL_PITCH] = scaleRange(attitude.values.pitch, -1800, 1800, -500, +500);
     input[INPUT_GIMBAL_ROLL] = scaleRange(attitude.values.roll, -1800, 1800, -500, +500);
+
+    // center the RC input value around the RC middle value
+    input[INPUT_CUSTOM_0] = scaleRange(attitude.values.roll, -1800, 1800, -500, +500);
+    input[INPUT_CUSTOM_1] = scaleRange(attitude.values.roll, -1800, 1800, -500, +500);
+    input[INPUT_CUSTOM_2] = scaleRange(attitude.values.roll, -1800, 1800, -500, +500);
+    input[INPUT_CUSTOM_3] = scaleRange(attitude.values.roll, -1800, 1800, -500, +500);
+    input[INPUT_CUSTOM_4] = scaleRange(attitude.values.roll, -1800, 1800, -500, +500);
 
     input[INPUT_STABILIZED_THROTTLE] = motor[0] - 1000 - 500;  // Since it derives from rcCommand or mincommand and must be [-500:+500]
 
@@ -521,6 +540,12 @@ static void servoTable(void)
         // center at fixed position, or vary either pitch or roll by RC channel
         servo[SERVO_GIMBAL_PITCH] = determineServoMiddleOrForwardFromChannel(SERVO_GIMBAL_PITCH);
         servo[SERVO_GIMBAL_ROLL] = determineServoMiddleOrForwardFromChannel(SERVO_GIMBAL_ROLL);
+
+        servo[SERVO_CUSTOM_0] = determineServoMiddleOrForwardFromChannel(SERVO_CUSTOM_0);
+        servo[SERVO_CUSTOM_1] = determineServoMiddleOrForwardFromChannel(SERVO_CUSTOM_1);
+        servo[SERVO_CUSTOM_2] = determineServoMiddleOrForwardFromChannel(SERVO_CUSTOM_2);
+        servo[SERVO_CUSTOM_3] = determineServoMiddleOrForwardFromChannel(SERVO_CUSTOM_3);
+        servo[SERVO_CUSTOM_4] = determineServoMiddleOrForwardFromChannel(SERVO_CUSTOM_4);
 
         if (IS_RC_MODE_ACTIVE(BOXCAMSTAB)) {
             if (gimbalConfig()->mode == GIMBAL_MODE_MIXTILT) {

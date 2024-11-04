@@ -47,6 +47,11 @@ enum {
     INPUT_RC_AUX4,
     INPUT_GIMBAL_PITCH,
     INPUT_GIMBAL_ROLL,
+    INPUT_CUSTOM_0,
+    INPUT_CUSTOM_1,
+    INPUT_CUSTOM_2,
+    INPUT_CUSTOM_3,
+    INPUT_CUSTOM_4,
     INPUT_SOURCE_COUNT
 };
 
@@ -75,7 +80,13 @@ typedef enum {
     SERVO_HELI_LEFT = 0,
     SERVO_HELI_RIGHT = 1,
     SERVO_HELI_TOP = 2,
-    SERVO_HELI_RUD = 3
+    SERVO_HELI_RUD = 3,
+
+    SERVO_CUSTOM_0 = 0,
+    SERVO_CUSTOM_1 = 1,
+    SERVO_CUSTOM_2 = 2,
+    SERVO_CUSTOM_3 = 3,
+    SERVO_CUSTOM_4 = 4,
 
 } servoIndex_e; // FIXME rename to servoChannel_e
 
