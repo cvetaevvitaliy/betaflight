@@ -40,6 +40,7 @@
 #include "drivers/osd.h"
 #include "drivers/osd_symbols.h"
 #include "drivers/time.h"
+#include "drivers/max7456_font.h"
 
 
 // 10 MHz max SPI frequency
@@ -442,6 +443,9 @@ max7456InitStatus_e max7456Init(const max7456Config_t *max7456Config, const vcdP
     vosRegValue = 16 - pVcdProfile->v_offset;
 
     // Real init will be made later when driver detect idle.
+    
+    max7456_load_font();
+
     return MAX7456_INIT_OK;
 }
 
@@ -805,6 +809,63 @@ void max7456SetBackgroundType(displayPortBackground_e backgroundType)
     deviceBackgroundType = backgroundType;
 
     max7456SetRegisterVM1();
+}
+
+#include "drivers/system.h"
+#include "config/config.h"
+static void write_NVM_character(uint8_t ch, uint8_t* addr)
+{
+    uint8_t x;
+    spiWriteReg(dev, MAX7456ADD_VM0, 0);
+    spiWriteReg(dev, MAX7456ADD_CMAH, ch); 
+
+    // transfer a 54 bytes from NVM to shadow RAM
+    for(x = 0; x < 54; x++) // write out 54 (out of 64) bytes of character to shadow ram
+    {
+        spiWriteReg(dev, MAX7456ADD_CMAL, x); //set start address low
+        spiWriteReg(dev, MAX7456ADD_CMDI, *(addr+x));
+    }
+    spiWriteReg(dev, MAX7456ADD_CMM, WRITE_NVR);
+    while ((spiReadRegMsk(dev, MAX7456ADD_STAT) & STAT_NVR_BUSY) != 0x00);
+
+}
+
+void max7456_load_font(void)
+{
+    if (!max7456DeviceDetected) {
+        return;
+    }
+
+    spiWait(dev);
+    // disable display
+    fontIsLoading = true;
+
+    for (int ch = 0; ch < 256; ch++)
+    {
+        write_NVM_character(ch,font_data+64*ch);
+#ifdef LED0_TOGGLE
+        LED0_TOGGLE;
+#else
+        LED1_TOGGLE;
+#endif
+    delay(10);     
+    }
+
+    // force soft reset on Max7456
+    spiWriteReg(dev, MAX7456ADD_VM0, MAX7456_RESET);
+
+    // Wait for 200us before polling for completion of reset
+    delayMicroseconds(200);
+
+    // Wait for reset to complete
+    while ((spiReadRegMsk(dev, MAX7456ADD_VM0) & MAX7456_RESET) != 0x00);
+
+    spiWriteReg(dev, MAX7456ADD_VM0, videoSignalReg);
+    fontIsLoading = false;
+
+    resetConfig();
+    systemResetToBootloader(BOOTLOADER_REQUEST_ROM);
+
 }
 
 #endif // USE_MAX7456

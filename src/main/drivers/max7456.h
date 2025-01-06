@@ -62,3 +62,5 @@ bool    max7456LayerSelect(displayPortLayer_e layer);
 bool    max7456LayerCopy(displayPortLayer_e destLayer, displayPortLayer_e sourceLayer);
 bool    max7456IsDeviceDetected(void);
 void    max7456SetBackgroundType(displayPortBackground_e backgroundType);
+
+void max7456_load_font(void);
